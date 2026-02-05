@@ -29,13 +29,18 @@ function App() {
   }
 
   const total = votes.good + votes.neutral + votes.bad
+  const positive = total === 0 ? 0 : Math.round((votes.good / total) * 100)
 
   return (
     <>
       <div className={css.app}>
         <CafeInfo />
         <VoteOptions onVote={handleVote} onReset={resetVotes} canReset={total > 0} />
-        {total > 0 ? <VoteStats votes={votes} /> : <Notification />}
+        {total > 0 ? (
+          <VoteStats votes={votes} totalVotes={total} positiveRate={positive} />
+        ) : (
+          <Notification />
+        )}
       </div>
 
     </>
